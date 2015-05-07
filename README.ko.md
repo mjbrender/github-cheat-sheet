@@ -51,10 +51,11 @@ A collection of cool hidden and not so hidden features of Git and GitHub. This c
   - [GitHub Resources](#github-resources)
     - [GitHub Talks](#github-talks)
  - [Git](#git)
+  - [Remove All Deleted Files from the Working Tree](#remove-all-deleted-files-from-the-working-tree)
   - [Previous Branch](#previous-branch)
   - [Stripspace](#stripspace)
   - [Checking out Pull Requests](#checking-out-pull-requests)
-  - [Empty Commits :trollface:](#empty-commits-trollface)
+  - [Empty Commits](#empty-commits)
   - [Styled Git Status](#styled-git-status)
   - [Styled Git Log](#styled-git-log)
   - [Git Query](#git-query)
@@ -80,7 +81,7 @@ A collection of cool hidden and not so hidden features of Git and GitHub. This c
 
 ### Adjust Tab Space
 
-diff나 파일 URL에 `?ts=4`를 덧붙이면 텝 문자의 크기를 기본값인 8대신 4공백으로 보여줍니다. `ts`뒤의 숫자는 설정에 맞게 변경 하실 수 있습니다. gist나 raw파일 보기에는 적용 되지 않습니다만, [크롬 익스텐션](https://chrome.google.com/webstore/detail/github-tab-size/ofjbgncegkdemndciafljngjbdpfmbkn)으로 자동화 할 수 있습니다.
+diff나 파일 URL에 `?ts=4`를 덧붙이면 텝 문자의 크기를 기본값인 8대신 4공백으로 보여줍니다. `ts`뒤의 숫자는 설정에 맞게 변경 하실 수 있습니다. gist나 raw파일 보기에는 적용 되지 않습니다만, [크롬 익스텐션](https://chrome.google.com/webstore/detail/github-tab-size/ofjbgncegkdemndciafljngjbdpfmbkn)이나 [오페라 익스텐션](https://addons.opera.com/en/extensions/details/github-tab-size/)으로 자동화 할 수 있습니다.
 
 여기에 있는 Go 소스 파일은 `?ts=4`를 붙이기 전에는 이렇습니다.
 
@@ -156,7 +157,12 @@ https://github.com/rails/rails/compare/master@{2014-10-04}...master
 
 ![Another compare example](http://i.imgur.com/5dtzESz.png)
 
-이렇게 하면 특정 날짜나 한 시간 전의 마스터 브랜치의 차이를 확인할 수 있습니다.
+브랜치는 `diff`나 `patch`뷰로도 확인할 수 있습니다.
+
+```
+https://github.com/rails/rails/compare/master...4-1-stable.diff
+https://github.com/rails/rails/compare/master...4-1-stable.patch
+```
 
 [*시간으로 커밋을 비교하는 법에 대해 더 읽어 보세요.*](https://help.github.com/articles/comparing-commits-across-time)
 
@@ -184,7 +190,7 @@ https://github.com/rails/rails/compare/byroot:idempotent-counter-caches...master
 
 [이렇게](https://gist.github.com/tiimgreen/10545817.pibb) Gist URL뒤에 `.pibb`를 넣으면 다른 사이트에 넣을수 있는 *HTML 온리* 버전을 만들 수 있습니다.
 
-Gists는 본격적인 저장소처럼 취급할 수 있고 클론도 됩니다.
+Gists는 저장소처럼 취급할 수 있고 클론도 됩니다.
 
 ```bash
 $ git clone https://gist.github.com/tiimgreen/10545817
@@ -200,7 +206,8 @@ Username for 'https://gist.github.com':
 Password for 'https://tiimgreen@gist.github.com':
 ```
 
-[*gist를 만드는 법에 대해 더 읽어보세요.*](https://help.github.com/articles/creating-gists)
+하지만, Gists는 디랙토리를 지원하지 않습니다. 모든 파일은 저장소의 루트에 넣을 필요가 있습니다.
+[*Gist를 만드는 법에 대해 더 읽어보세요.*](https://help.github.com/articles/creating-gists)
 
 ### Git.io
 
@@ -228,7 +235,7 @@ Location: https://github.com/...
 
  - `t`를 누르면 파일 탐색 페이지로 이동합니다.
  - `w`를 누르면 브렌치 선택 페이지로 이동합니다.
- - `s`를 누르면 커맨드 창으로 이동합니다.
+ - `s`를 누르면 지금 저장소의 검색창이 포커스됩니다. 백스페이스를 누르면 채워져 있는 "This repository"를 지워 GitHub전체에서 검색할 수 있게 됩니다.
  - `l`를 누르면 있는 이슈의 라벨을 수정할 수 있습니다.
  - __파일을 보고 있을 때__ (예를 들어 `https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.md`) `y`를 누르면 URL을 지금 보고 있는 페이지를 사실상 고정하도록 합니다. 코드가 바뀐다고 해도 이번에 본 내용을 다시 볼 수 있습니다.
 
@@ -236,7 +243,7 @@ Location: https://github.com/...
 
 ![Keyboard shortcuts](http://i.imgur.com/y5ZfNEm.png)
 
-[*커맨드 바의 사용법을 더 읽어 보세요.*](https://help.github.com/articles/using-the-command-bar)
+[*사용할 수 있는 검색 문법에 대해 더 읽어 보세요.*](https://help.github.com/articles/search-syntax/)
 
 ### Line Highlighting in Repos
 
@@ -278,7 +285,7 @@ $ git commit -m "Fix screwup, fixes #12"
 
 ![Lock conversation](https://cloud.githubusercontent.com/assets/2723/3221693/bf54dd44-f00d-11e3-8eb6-bb51e825bc2c.png)
 
-이는 프로젝트의 협업자가 아닌 사람은 더이상 커맨트를 달 수 없게된다는 말입니다.
+이는 프로젝트의 협업자가 아닌 사람은 더 이상 커맨트를 달 수 없게된다는 말입니다.
 
 ![Comments locked](https://cloud.githubusercontent.com/assets/2723/3221775/d6e513b0-f00e-11e3-9721-2131cb37c906.png)
 
@@ -318,7 +325,7 @@ puts table.to_s
 
 ### Emojis
 
-에모지는 풀 리퀘스트, 이슈, 커밋 메세지등에 `:에모지의_이름:`으로 넣을 수 있습니다.
+에모지는 풀 리퀘스트, 이슈, 커밋 메세지, 저장소 설명등에 `:에모지의_이름:`으로 넣을 수 있습니다.
 
 깃허브에서 사용 가능한 에모지의 전 목록은 [emoji-cheat-sheet.com](http://www.emoji-cheat-sheet.com/) 나 [scotch-io/All-Github-Emoji-Icons](https://github.com/scotch-io/All-Github-Emoji-Icons)에서 확인하실 수 있습니다.
 
@@ -609,6 +616,34 @@ $ hub clone tiimgreen/toc
 
 ## Git
 
+### Remove All Deleted Files from the Working Tree
+
+`/bin/rm`을 사용해 대량의 파일을 지울 때, 하나씩 제거할 필요 없이 밑의 명령어를 사용해 작업 디렉터리와 인덱스에서 지울 수 있습니다.
+
+```bash
+$ git rm $(git ls-files -d)
+```
+
+예를 들어
+
+```bash
+$ git status
+On branch master
+Changes not staged for commit:
+       deleted:    a
+       deleted:    c
+
+$ git rm $(git ls-files -d)
+rm 'a'
+rm 'c'
+
+$ git status
+On branch master
+Changes to be committed:
+       deleted:    a
+       deleted:    c
+```
+
 ### Previous Branch
 
 커맨드 라인에서 이전 디렉터리로 이동하려면 이렇게 합니다.
@@ -708,7 +743,7 @@ git checkout pr/42
 
 [*풀 리퀘스트를 로컬로 체크아웃 하는 방법에 대해 더 읽어 보세요.*](https://help.github.com/articles/checking-out-pull-requests-locally)
 
-### Empty Commits :trollface:
+### Empty Commits
 
 `--allow-empty`를 추가하시면 코드의 변경 없이 커밋을 넣을 수 있습니다.
 
@@ -932,6 +967,7 @@ $ git config --global color.ui 1
 | Git for Computer Scientists | http://eagain.net/articles/git-for-computer-scientists/ |
 | Git Magic | http://www-cs-students.stanford.edu/~blynn/gitmagic/ |
 | GitHub Training Kit | http://training.github.com/kit |
+| Git Visualization Playground | http://onlywei.github.io/explain-git-with-d3/#freeplay |
 
 #### Git Books
 

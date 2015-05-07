@@ -49,10 +49,11 @@ A collection of cool hidden and not so hidden features of Git and GitHub. This c
   - [GitHub Resources](#github-resources)
     - [GitHub Talks](#github-talks)
  - [Git](#git)
+  - [Remove All Deleted Files from the Working Tree](#remove-all-deleted-files-from-the-working-tree)
   - [Previous Branch](#previous-branch)
   - [Stripspace](#stripspace)
   - [Checking out Pull Requests](#checking-out-pull-requests)
-  - [Empty Commits :trollface:](#empty-commits-trollface)
+  - [Empty Commits](#empty-commits)
   - [Styled Git Status](#styled-git-status)
   - [Styled Git Log](#styled-git-log)
   - [Git Query](#git-query)
@@ -75,7 +76,7 @@ Adding `?w=1` to any diff URL will remove any changes only in whitespace, enabli
 [*Read more about GitHub secrets.*](https://github.com/blog/967-github-secrets)
 
 ### Adjust Tab Space
-Adding `?ts=4` to a diff or file URL will display tab characters as 4 spaces wide instead of the default 8. The number after `ts` can be adjusted to suit your preference. This does not work on Gists, or raw file views, but a [Chrome extension](https://chrome.google.com/webstore/detail/github-tab-size/ofjbgncegkdemndciafljngjbdpfmbkn) can automate this.
+Adding `?ts=4` to a diff or file URL will display tab characters as 4 spaces wide instead of the default 8. The number after `ts` can be adjusted to suit your preference. This does not work on Gists, or raw file views, but a [Chrome](https://chrome.google.com/webstore/detail/github-tab-size/ofjbgncegkdemndciafljngjbdpfmbkn) or [Opera  extension](https://addons.opera.com/en/extensions/details/github-tab-size/) can automate this.
 
 Here is a Go source file before adding `?ts=4`:
 
@@ -144,7 +145,7 @@ https://github.com/rails/rails/compare/master@{1.day.ago}...master
 https://github.com/rails/rails/compare/master@{2014-10-04}...master
 ```
 
-*Dates are in the format `YYYY-DD-MM`*
+*Dates are in the format `YYYY-MM-DD`*
 
 ![Another compare example](http://i.imgur.com/5dtzESz.png)
 
@@ -223,7 +224,7 @@ When on a repository page, keyboard shortcuts allow you to navigate easily.
 
  - Pressing `t` will bring up a file explorer.
  - Pressing `w` will bring up the branch selector.
- - Pressing `s` will select the Command Bar.
+ - Pressing `s` will focus the search field for the current repository. Pressing Backspace to delete the “This repository” pill changes the field to search all of GitHub.
  - Pressing `l` will edit labels on existing Issues.
  - Pressing `y` **when looking at a file** (e.g. `https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.md`) will change your URL to one which, in effect, freezes the page you are looking at. If this code changes, you will still be able to see what you saw at that current time.
 
@@ -231,7 +232,7 @@ To see all of the shortcuts for the current page press `?`:
 
 ![Keyboard shortcuts](http://i.imgur.com/y5ZfNEm.png)
 
-[*Read more about using the Command Bar.*](https://help.github.com/articles/using-the-command-bar)
+[Read more about search syntax you can use.](https://help.github.com/articles/search-syntax/)
 
 ### Line Highlighting in Repositories
 Either adding `#L52` to the end of a code file URL or simply clicking the line number will highlight that line number.
@@ -307,7 +308,7 @@ GitHub uses [Linguist](https://github.com/github/linguist) to perform language d
 [*Read more about GitHub Flavored Markdown.*](https://help.github.com/articles/github-flavored-markdown)
 
 ### Emojis
-Emojis can be added to Pull Requests, Issues, commit messages, etc. using `:name_of_emoji:`
+Emojis can be added to Pull Requests, Issues, commit messages, repository descriptions, etc. using `:name_of_emoji:`.
 
 The full list of supported Emojis on GitHub can be found at [emoji-cheat-sheet.com](http://www.emoji-cheat-sheet.com/) or [scotch-io/All-Github-Emoji-Icons](https://github.com/scotch-io/All-Github-Emoji-Icons).
 
@@ -578,6 +579,33 @@ GitHubs icons (Octicons) have now been open sourced.
 | More Git and GitHub Secrets | https://www.youtube.com/watch?v=p50xsL-iVgU |
 
 ## Git
+### Remove All Deleted Files from the Working Tree
+When you delete a lot of files using `/bin/rm` you can use the following command to remove them from the working tree and from the index, eliminating the need to remove each one individually:
+
+```bash
+$ git rm $(git ls-files -d)
+```
+
+For example:
+
+```bash
+$ git status
+On branch master
+Changes not staged for commit:
+	deleted:    a
+	deleted:    c
+	
+$ git rm $(git ls-files -d)
+rm 'a'
+rm 'c'
+
+$ git status
+On branch master
+Changes to be committed:
+	deleted:    a
+	deleted:    c
+```
+
 ### Previous Branch
 To move to the previous branch in Git:
 
@@ -664,7 +692,7 @@ git checkout pr/42
 
 [*Read more about checking out pull requests locally.*](https://help.github.com/articles/checking-out-pull-requests-locally)
 
-### Empty Commits :trollface:
+### Empty Commits
 Commits can be pushed with no code changes by adding `--allow-empty`:
 
 ```bash
@@ -880,6 +908,7 @@ $ git config --global color.ui 1
 | Git for Computer Scientists | http://eagain.net/articles/git-for-computer-scientists/ |
 | Git Magic | http://www-cs-students.stanford.edu/~blynn/gitmagic/ |
 | GitHub Training Kit | http://training.github.com/kit |
+| Git Visualization Playground | http://onlywei.github.io/explain-git-with-d3/#freeplay |
 
 #### Git Books
 | Title | Link |
